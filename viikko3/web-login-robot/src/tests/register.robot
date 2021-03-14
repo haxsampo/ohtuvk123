@@ -5,23 +5,13 @@ Suite Teardown  Close Browser
 Test Setup  Create User And Go To Login Page
 
 *** Test Cases ***
-Login With Correct Credentials
-    Set Username  kalle
-    Set Password  kalle123
-    Submit Credentials
-    Login Should Succeed
-
-Login With Incorrect Password
-    Set Username  kalle
-    Set Password  kalle456
-    Submit Credentials
-    Login Should Fail With Message  Invalid username or password
-
-Login With Nonexistent Username
-    Set Username  abcabc
-    Set Password  kalle123
-    Submit Credentials
-    Login Should Fail With Message  Invalid username or password
+Register With Valid Username And Password
+    Go To Register Page
+    Set Username  asiopdj
+    Set Password  as8y98d
+    Confirm Password  as8y98d
+    Click Button  Register
+    Welcome Page Should be Open
 
 *** Keywords ***
 Login Should Succeed
@@ -42,6 +32,10 @@ Set Username
 Set Password
     [Arguments]  ${password}
     Input Password  password  ${password}
+
+Confirm Password
+    [Arguments]  ${password_confirmation}
+    Input Password  password_confirmation  ${password_confirmation}
 
 Create User And Go To Login Page
     Create User  kalle  kalle123
