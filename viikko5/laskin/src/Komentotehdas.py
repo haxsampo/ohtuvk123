@@ -2,7 +2,7 @@
 
 class Komentotehdas:
     def __init__(self):
-        self.a=1
+        self.edeltava = 0
         self.komennot = {
             "summa": Summa(),
             "erotus": Erotus(),
