@@ -12,46 +12,49 @@ class TennisGame:
             self.m_score2 = self.m_score2 + 1
 
     def get_score(self):
-        score = ""
-        temp_score = 0
-
         if self.m_score1 == self.m_score2:
-            if self.m_score1 == 0:
-                score = "Love-All"
-            elif self.m_score1 == 1:
-                score = "Fifteen-All"
-            elif self.m_score1 == 2:
-                score = "Thirty-All"
-            elif self.m_score1 == 3:
-                score = "Forty-All"
-            else:
-                score = "Deuce"
+            score = self.equal_scores()
         elif self.m_score1 >= 4 or self.m_score2 >= 4:
-            minus_result = self.m_score1 - self. m_score2
-
-            if minus_result == 1:
-                score = "Advantage player1"
-            elif minus_result == -1:
-                score = "Advantage player2"
-            elif minus_result >= 2:
-                score = "Win for player1"
-            else:
-                score = "Win for player2"
+            score = self.a_score_greater_than_3()
         else:
-            for i in range(1, 3):
-                if i == 1:
-                    temp_score = self.m_score1
-                else:
-                    score = score + "-"
-                    temp_score = self.m_score2
-
-                if temp_score == 0:
-                    score = score + "Love"
-                elif temp_score == 1:
-                    score = score + "Fifteen"
-                elif temp_score == 2:
-                    score = score + "Thirty"
-                elif temp_score == 3:
-                    score = score + "Forty"
-
+            score = self.different_scores()
         return score
+
+    def different_scores(self):
+        return self.pisteen_kirjallinen_vastine(self.m_score1) + "-" + self.pisteen_kirjallinen_vastine(self.m_score2)
+
+    def equal_scores(self):
+        if(self.m_score1 > 3):
+            score = "Deuce"
+        else:
+            score = self.pisteen_kirjallinen_vastine(self.m_score1) + "-All"
+        return score
+
+    def a_score_greater_than_3(self):
+        erotus = self.m_score1 - self.m_score2
+        if(abs(erotus)<2):
+            return self.etu(erotus)
+        else:
+            return self.voitto(erotus)
+
+    def voitto(self, erotus):
+        if(erotus >=2):
+            return "Win for player1"
+        else:
+            return "Win for player2"
+    
+    def etu(self, erotus):
+        if(erotus == 1):
+            return "Advantage player1"
+        else:
+            return "Advantage player2"
+    
+    def pisteen_kirjallinen_vastine(self, pisteet):
+        if pisteet == 0:
+            return "Love"
+        elif pisteet == 1:
+            return "Fifteen"
+        elif pisteet == 2:
+            return "Thirty"
+        elif pisteet == 3:
+            return "Forty"
