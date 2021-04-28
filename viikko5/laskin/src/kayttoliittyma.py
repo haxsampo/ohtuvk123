@@ -1,18 +1,11 @@
 from tkinter import ttk, constants, StringVar
-import Komentotehdas
+from Komentotehdas import Komentotehdas, Summa, Erotus, Nollaus, Kumoa
 
 class Kayttoliittyma:
     def __init__(self, sovellus, root, komentotehdas):
         self._sovellus = sovellus
         self._root = root
         self._komentotehdas = komentotehdas
-
-        #self._komennot = {
-        #    Komento.SUMMA: Summa(self._sovellus, self._syote_kentta.get()),
-        #    Komento.EROTUS: Erotus(self._sovellus, self._syote_kentta.get()),
-        #    Komento.NOLLAUS: Nollaus(self._sovellus, self._syote_kentta.get()),
-        #    Komento.KUMOA: Kumoa(self._sovellus, self._syote_kentta.get())
-        #}
 
     def kaynnista(self):
         self._tulos_var = StringVar()
@@ -56,14 +49,12 @@ class Kayttoliittyma:
 
     def _suorita_komento(self, komento):
         arvo = 0
-        #siirrä arvotsekki vaikka inittiin tms
         try:
             arvo = int(self._syote_kentta.get())
         except Exception:
             pass
-
         komento_olio = self._komentotehdas.komennot[komento]
-        komento_olio.suorita(self._sovellus, arvo)
+        komento_olio.suorita(arvo, self._sovellus,self._komentotehdas,komento)
 
         self._kumoa_painike["state"] = constants.NORMAL
 
@@ -74,5 +65,4 @@ class Kayttoliittyma:
 
         self._syote_kentta.delete(0, constants.END)
         self._tulos_var.set(self._sovellus.tulos)
-
 
